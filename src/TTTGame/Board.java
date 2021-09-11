@@ -66,4 +66,8 @@ class Board {
     public boolean isDraw() {
         return remainingPos == 0;
     }
+
+    public boolean inBound(int row, int col) {
+        return row < r || row >= 0 || col < c || col >= 0;
+    }
 }

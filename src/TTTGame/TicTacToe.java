@@ -30,7 +30,7 @@ public class TicTacToe {
     }
 
     public void display() {
-        board.display();;
+        board.display();
     }
 
     public void clear() {
@@ -39,26 +39,36 @@ public class TicTacToe {
 
     public int[] takeInput(Scanner in) {
         String input = in.nextLine();
-        String[] parameters = input.split("([^0-9]*,[^0-9]*)");
-        //TODO: HANDLE ERROR INPUT: INVALID OR OUT OF BOUND
-        int row = Integer.parseInt(parameters[0]), col = Integer.parseInt(parameters[1]);
-        while (!board.isValidPos(row, col)) {
-            System.out.print("Position taken! Switch to another position: ");
-            input = in.nextLine();
-            parameters = input.split("( *, *)");
-            row = Integer.parseInt(parameters[0]);
-            col = Integer.parseInt(parameters[1]);
+        String[] parameters = input.split("( *, *)");
+        try {
+            int row = Integer.parseInt(parameters[0]), col = Integer.parseInt(parameters[1]);
+            if (!board.inBound(row, col)) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
+            while (!board.isValidPos(row, col)) {
+                System.out.print("Position taken! Switch to another position: ");
+                input = in.nextLine();
+                parameters = input.split("( *, *)");
+                row = Integer.parseInt(parameters[0]);
+                col = Integer.parseInt(parameters[1]);
+            }
+            return new int[]{row, col};
+        } catch (NumberFormatException e) {
+            System.out.print("Invalid input! Try again: ");
+            return takeInput(in);
         }
-        return new int[]{row, col};
+
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.print("Number out of bound! Try again: ");
+            return takeInput(in);
+        }
+
     }
 
     public boolean makeMove(Scanner in) {
-        int playerNum = playerList.size();
 
-        for (int i = 0; i < playerNum; i++) {
-            Player thisPlayer = playerList.get(i);
-
-            System.out.print("Player " + thisPlayer.getName() + " Enter your move: ");
+        for (Player thisPlayer : playerList) {
+            System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y: ");
             int[] parameters = takeInput(in);
             thisPlayer.put(parameters[0], parameters[1]);
             display();
@@ -67,15 +77,12 @@ public class TicTacToe {
                 System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? ");
                 if (!ifContinue(in)) {
                     return false;
-                }
-                else break;
-            }
-            else if (board.isDraw()) {
+                } else break;
+            } else if (board.isDraw()) {
                 System.out.print("Draw! Want another round? ");
                 if (!ifContinue(in)) {
                     return false;
-                }
-                else break;
+                } else break;
             }
         }
         return true;
@@ -83,14 +90,22 @@ public class TicTacToe {
 
     private boolean ifContinue(Scanner in) {
         String continueStr = in.nextLine();
-        //TODO: HANDLE ERROR INPUT
-        if (continueStr.equalsIgnoreCase("yes")) {
-            this.clear();
-            display();
-            return true;
+        try {
+            if (continueStr.equalsIgnoreCase("yes")) {
+                this.clear();
+                display();
+                return true;
+            }
+            else if (continueStr.equalsIgnoreCase("no")) {
+                return false;
+            }
+            else {
+                throw new RuntimeException();
+            }
         }
-        else {
-            return false;
+        catch (RuntimeException e) {
+            System.out.print("Invalid input! Try again: ");
+            return ifContinue(in);
         }
     }
 }

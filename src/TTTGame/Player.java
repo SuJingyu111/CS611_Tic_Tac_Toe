@@ -10,7 +10,6 @@ class Player {
 
     private final int[][] directions;
 
-    //TODO
     public Player(String name, Board board) {
         this.name = name;
         this.board = board;
@@ -32,8 +31,6 @@ class Player {
     public boolean isWinner() {
         int[] parameters = board.getParameters();
         int r = parameters[0], c = parameters[1];
-        //TODO: NON VERTICAL
-        //TODO: DRAW
         int step1 = 0, step2 = 0;
         for (int i = 0; i < 4; i++) {
             int[] direction1 = directions[2 * i], direction2 = directions[2 * i + 1];
