@@ -45,7 +45,7 @@ public class TicTacToe {
         while (!board.isValidPos(row, col)) {
             System.out.print("Position taken! Switch to another position: ");
             input = in.nextLine();
-            parameters = input.split("([^0-9]*,[^0-9]*)");
+            parameters = input.split("( *, *)");
             row = Integer.parseInt(parameters[0]);
             col = Integer.parseInt(parameters[1]);
         }
