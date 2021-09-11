@@ -21,7 +21,7 @@ public class TicTacToe {
         TicTacToe game = new TicTacToe();
         System.out.println("Welcome to TicTacToe ver 0.1");
         game.display();
-        Scanner in =new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
         while (true) {
             if (!game.makeMove(in)) {
                 break;
@@ -57,7 +57,6 @@ public class TicTacToe {
             System.out.print("Invalid input! Try again: ");
             return takeInput(in);
         }
-
         catch (ArrayIndexOutOfBoundsException e) {
             System.out.print("Number out of bound! Try again: ");
             return takeInput(in);
@@ -66,7 +65,6 @@ public class TicTacToe {
     }
 
     public boolean makeMove(Scanner in) {
-
         for (Player thisPlayer : playerList) {
             System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y: ");
             int[] parameters = takeInput(in);
