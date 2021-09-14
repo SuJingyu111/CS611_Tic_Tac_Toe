@@ -31,12 +31,12 @@ class Player {
     public boolean isWinner() {
         int[] parameters = board.getParameters();
         int r = parameters[0], c = parameters[1];
-        int step1 = 0, step2 = 0;
+        int step1 = 0, step2 = 0, winningCriterion = board.getWinningCriterion();
         for (int i = 0; i < 4; i++) {
             int[] direction1 = directions[2 * i], direction2 = directions[2 * i + 1];
             step1 = getLength(direction1, r, c);
             step2 = getLength(direction2, r, c);
-            if (step1 + step2 + 1 >= board.getWinningCriterion()) {
+            if (step1 + step2 + 1 >= winningCriterion) {
                 return true;
             }
         }

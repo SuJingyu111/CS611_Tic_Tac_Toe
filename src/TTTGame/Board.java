@@ -41,6 +41,7 @@ class Board {
 
     public void clear() {
         view = new String[r][c];
+        remainingPos = r * c;
     }
 
     public boolean isValidPos(int row, int col) {
