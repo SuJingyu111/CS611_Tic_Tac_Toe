@@ -1,5 +1,3 @@
-package TTTGame;
-
 class Player {
 
     private String name;

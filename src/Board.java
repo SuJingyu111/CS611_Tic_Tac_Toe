@@ -1,5 +1,3 @@
-package TTTGame;
-
 class Board {
 
     private String[][] view;

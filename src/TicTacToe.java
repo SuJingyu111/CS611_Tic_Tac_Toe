@@ -1,23 +1,19 @@
-package TTTGame;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class TicTacToe {
-
-    private Board board;
-
-    private List<Player> playerList;
+public class TicTacToe extends AbstractBoardGame {
 
     public TicTacToe() {
-        board = new Board();
-        playerList = new ArrayList<>();
-        playerList.add(new Player("O", board));
-        playerList.add(new Player("X", board));
+        super(new Board());
+        teamList = new ArrayList<>();
+        teamList.add(new ArrayList<>());
+        teamList.get(0).add(new Player("O", board));
+        teamList.add(new ArrayList<>());
+        teamList.get(1).add(new Player("X", board));
     }
 
-    public static void main(String[] args) {
+    public void run() {
         TicTacToe game = new TicTacToe();
         System.out.println("Welcome to TicTacToe ver 0.1");
         game.display();
@@ -40,13 +36,18 @@ public class TicTacToe {
 
     public void endDisplay() {
         System.out.println("End of the game!");
-        for (Player p : playerList) {
-            System.out.println("Player " + p.getName() + " won " + p.getWinCnt() + " time(s). ");
+        for (List<Player> team : teamList) {
+            for (Player p : team) {
+                System.out.println("Player " + p.getName() + " won " + p.getWinCnt() + " time(s). ");
+            }
         }
     }
 
-    public int[] takeInput(Scanner in) {
+    private int[] takeInput(Scanner in) {
         String input = in.nextLine();
+        if (input.equalsIgnoreCase("exit")) {
+            return new int[0];
+        }
         String[] parameters = input.split("( *, *)");
         try {
             int row = Integer.parseInt(parameters[0]), col = Integer.parseInt(parameters[1]);
@@ -72,23 +73,28 @@ public class TicTacToe {
 
     }
 
-    public boolean makeMove(Scanner in) {
-        for (Player thisPlayer : playerList) {
-            System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y: ");
-            int[] parameters = takeInput(in);
-            thisPlayer.put(parameters[0], parameters[1]);
-            display();
+    private boolean makeMove(Scanner in) {
+        for (List<Player> team : teamList) {
+            for (Player thisPlayer : team) {
+                System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y: ");
+                int[] parameters = takeInput(in);
+                if (parameters.length == 0) {
+                    return false;
+                }
+                thisPlayer.put(parameters[0], parameters[1]);
+                display();
 
-            if (thisPlayer.isWinner()) {
-                System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
-                if (!ifContinue(in)) {
-                    return false;
-                } else break;
-            } else if (board.isDraw()) {
-                System.out.print("Draw! Want another round? (Yes/No) ");
-                if (!ifContinue(in)) {
-                    return false;
-                } else break;
+                if (thisPlayer.isWinner()) {
+                    System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
+                    if (!ifContinue(in)) {
+                        return false;
+                    } else break;
+                } else if (board.isDraw()) {
+                    System.out.print("Draw! Want another round? (Yes/No) ");
+                    if (!ifContinue(in)) {
+                        return false;
+                    } else break;
+                }
             }
         }
         return true;
