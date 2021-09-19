@@ -2,7 +2,7 @@ class Player {
 
     private String name;
 
-    private Board board;
+    private TicTacToeBoard board;
 
     private int lastMoveRow, lastMoveCol;
 
@@ -10,7 +10,7 @@ class Player {
 
     private final int[][] directions;
 
-    public Player(String name, Board board) {
+    public Player(String name, TicTacToeBoard board) {
         this.name = name;
         this.board = board;
         lastMoveRow = -1;

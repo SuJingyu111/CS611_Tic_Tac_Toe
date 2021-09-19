@@ -1,13 +1,12 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractBoardGame {
 
-    protected Board board;
+    protected AbstractBoard board;
 
     protected List<List<Player>> teamList;
 
-    public AbstractBoardGame(Board board) {
+    public AbstractBoardGame(AbstractBoard board) {
         this.board = board;
     }
 

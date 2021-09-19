@@ -1,21 +1,21 @@
-class Board {
-
-    private String[][] view;
+class TicTacToeBoard extends AbstractBoard {
 
     private int winningCriterion;
 
-    private int r, c;
-
     private int remainingPos;
 
-    public Board() {
-        view = new String[3][3];
-        r = 3;
-        c = 3;
+    public TicTacToeBoard() {
+        super();
         winningCriterion = 3;
         remainingPos = 9;
     }
 
+    public TicTacToeBoard(int r, int c, int winningCriterion) {
+        super(r, c);
+        this.winningCriterion = winningCriterion;
+    }
+
+    /*
     public String toString() {
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < r; i++) {
@@ -31,19 +31,16 @@ class Board {
         res.append("+\n");
         return res.toString();
     }
+    */
 
-    public void put(int row, int col, String playerName) {
+    public void put(int row, int col, AbstractPiece piece) {
         remainingPos--;
-        view[row][col] = playerName;
+        view[row][col] = piece;
     }
 
     public void clear() {
-        view = new String[r][c];
+        view = new AbstractPiece[r][c];
         remainingPos = r * c;
-    }
-
-    public boolean isValidPos(int row, int col) {
-        return view[row][col] == null;
     }
 
     public void display() {
@@ -54,8 +51,8 @@ class Board {
         return new int[]{r, c};
     }
 
-    public String getPositionString(int row, int col) {
-        return view[row][col] == null ? " " : view[row][col];
+    public String getPieceName(int row, int col) {
+        return view[row][col] == null ? " " : view[row][col].getName();
     }
 
     public int getWinningCriterion() {
@@ -64,9 +61,5 @@ class Board {
 
     public boolean isDraw() {
         return remainingPos == 0;
-    }
-
-    public boolean inBound(int row, int col) {
-        return row < r || row >= 0 || col < c || col >= 0;
     }
 }

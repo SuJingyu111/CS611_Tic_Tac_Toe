@@ -5,17 +5,17 @@ import java.util.Scanner;
 public class TicTacToe extends AbstractBoardGame {
 
     public TicTacToe() {
-        super(new Board());
+        super(new TicTacToeBoard());
         teamList = new ArrayList<>();
         teamList.add(new ArrayList<>());
-        teamList.get(0).add(new Player("O", board));
+        teamList.get(0).add(new Player("O", (TicTacToeBoard) board));
         teamList.add(new ArrayList<>());
-        teamList.get(1).add(new Player("X", board));
+        teamList.get(1).add(new Player("X", (TicTacToeBoard)board));
     }
 
     public void run() {
         TicTacToe game = new TicTacToe();
-        System.out.println("Welcome to TicTacToe ver 0.1");
+        System.out.println("Welcome to TicTacToe ver 0.2 ");
         game.display();
         Scanner in = new Scanner(System.in);
         while (true) {

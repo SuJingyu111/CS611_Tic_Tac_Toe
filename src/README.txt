@@ -6,5 +6,5 @@ javac TTTGame/*.java
 java TTTGame.TicTacToe
 
 TicTacToe: An overall architecture of the game. The main method is located here.
-Board: The board on which the game is played.
+TicTacToeBoard: The board on which the game is played.
 Player: Different players of the game.
