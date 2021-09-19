@@ -1,6 +1,6 @@
-public class AbstractPiece {
+public abstract class AbstractPiece {
 
-    private String name;
+    protected String name;
 
     public AbstractPiece(String name) {
         this.name = name;
