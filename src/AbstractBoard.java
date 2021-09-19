@@ -16,7 +16,7 @@ public abstract class AbstractBoard {
         this.c = c;
     }
 
-    public String toString() {
+    public String toDisplayString() {
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < r; i++) {
             res.append("+--".repeat(Math.max(0, c)));
@@ -38,6 +38,10 @@ public abstract class AbstractBoard {
 
     public boolean inBound(int row, int col) {
         return row < r || row >= 0 || col < c || col >= 0;
+    }
+
+    public String getPieceName(int row, int col) {
+        return view[row][col] == null ? " " : view[row][col].getName();
     }
 
     public abstract void put(int row, int col, AbstractPiece piece);

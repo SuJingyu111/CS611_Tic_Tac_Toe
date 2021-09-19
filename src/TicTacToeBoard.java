@@ -44,15 +44,11 @@ class TicTacToeBoard extends AbstractBoard {
     }
 
     public void display() {
-        System.out.println(this);
+        System.out.println(toDisplayString());
     }
 
     public int[] getParameters() {
         return new int[]{r, c};
-    }
-
-    public String getPieceName(int row, int col) {
-        return view[row][col] == null ? " " : view[row][col].getName();
     }
 
     public int getWinningCriterion() {
