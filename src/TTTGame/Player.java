@@ -8,6 +8,8 @@ class Player {
 
     private int lastMoveRow, lastMoveCol;
 
+    private int winCnt;
+
     private final int[][] directions;
 
     public Player(String name, Board board) {
@@ -15,12 +17,15 @@ class Player {
         this.board = board;
         lastMoveRow = -1;
         lastMoveCol = -1;
+        winCnt = 0;
         directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
     }
 
     public String getName() {
         return name;
     }
+
+    public int getWinCnt() { return winCnt; };
 
     public void put(int row, int col) {
         lastMoveRow = row;
@@ -37,6 +42,7 @@ class Player {
             step1 = getLength(direction1, r, c);
             step2 = getLength(direction2, r, c);
             if (step1 + step2 + 1 >= winningCriterion) {
+                winCnt++;
                 return true;
             }
         }

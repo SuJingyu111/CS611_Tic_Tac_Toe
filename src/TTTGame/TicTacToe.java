@@ -24,6 +24,7 @@ public class TicTacToe {
         Scanner in = new Scanner(System.in);
         while (true) {
             if (!game.makeMove(in)) {
+                game.endDisplay();
                 break;
             }
         }
@@ -35,6 +36,13 @@ public class TicTacToe {
 
     public void clear() {
         board.clear();
+    }
+
+    public void endDisplay() {
+        System.out.println("End of the game!");
+        for (Player p : playerList) {
+            System.out.println("Player " + p.getName() + " won " + p.getWinCnt() + " time(s). ");
+        }
     }
 
     public int[] takeInput(Scanner in) {
@@ -72,12 +80,12 @@ public class TicTacToe {
             display();
 
             if (thisPlayer.isWinner()) {
-                System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? ");
+                System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
                 if (!ifContinue(in)) {
                     return false;
                 } else break;
             } else if (board.isDraw()) {
-                System.out.print("Draw! Want another round? ");
+                System.out.print("Draw! Want another round? (Yes/No) ");
                 if (!ifContinue(in)) {
                     return false;
                 } else break;
