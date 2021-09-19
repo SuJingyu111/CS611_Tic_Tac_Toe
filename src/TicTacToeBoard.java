@@ -15,24 +15,6 @@ class TicTacToeBoard extends AbstractBoard {
         this.winningCriterion = winningCriterion;
     }
 
-    /*
-    public String toString() {
-        StringBuilder res = new StringBuilder();
-        for (int i = 0; i < r; i++) {
-            res.append("+--".repeat(Math.max(0, c)));
-            res.append("+\n");
-            for (int j = 0; j < c; j++) {
-                res.append('|');
-                res.append(view[i][j] == null ? "  " : view[i][j] + " ");
-            }
-            res.append("|\n");
-        }
-        res.append("+--".repeat(Math.max(0, c)));
-        res.append("+\n");
-        return res.toString();
-    }
-    */
-
     public void put(int row, int col, AbstractPiece piece) {
         remainingPos--;
         view[row][col] = piece;
