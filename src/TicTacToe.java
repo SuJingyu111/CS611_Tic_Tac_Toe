@@ -8,9 +8,9 @@ public class TicTacToe extends AbstractBoardGame {
         super(new TicTacToeBoard());
         teamList = new ArrayList<>();
         teamList.add(new ArrayList<>());
-        teamList.get(0).add(new Player("O", (TicTacToeBoard) board));
+        teamList.get(0).add(new TicTacToePlayer("O", (TicTacToeBoard) board));
         teamList.add(new ArrayList<>());
-        teamList.get(1).add(new Player("X", (TicTacToeBoard)board));
+        teamList.get(1).add(new TicTacToePlayer("X", (TicTacToeBoard)board));
     }
 
     public void run() {
@@ -36,9 +36,9 @@ public class TicTacToe extends AbstractBoardGame {
 
     public void endDisplay() {
         System.out.println("End of the game!");
-        for (List<Player> team : teamList) {
-            for (Player p : team) {
-                System.out.println("Player " + p.getName() + " won " + p.getWinCnt() + " time(s). ");
+        for (List<AbstractPlayer> team : teamList) {
+            for (AbstractPlayer p : team) {
+                System.out.println("Player " + p.getName() + " won " + ((TicTacToePlayer)p).getWinCnt() + " time(s). ");
             }
         }
     }
@@ -74,14 +74,14 @@ public class TicTacToe extends AbstractBoardGame {
     }
 
     private boolean makeMove(Scanner in) {
-        for (List<Player> team : teamList) {
-            for (Player thisPlayer : team) {
+        for (List<AbstractPlayer> team : teamList) {
+            for (AbstractPlayer thisPlayer : team) {
                 System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y: ");
                 int[] parameters = takeInput(in);
                 if (parameters.length == 0) {
                     return false;
                 }
-                thisPlayer.put(parameters[0], parameters[1]);
+                thisPlayer.put(parameters[0], parameters[1], thisPlayer.getName());
                 display();
 
                 if (thisPlayer.isWinner()) {

@@ -4,7 +4,7 @@ public abstract class AbstractBoardGame {
 
     protected AbstractBoard board;
 
-    protected List<List<Player>> teamList;
+    protected List<List<AbstractPlayer>> teamList;
 
     public AbstractBoardGame(AbstractBoard board) {
         this.board = board;
