@@ -68,29 +68,14 @@ public class OrderAndChaos extends TicTacToe {
         }
     }
 
-    protected boolean makeMove(Scanner in) {
-        for (List<AbstractPlayer> team : teamList) {
-            for (AbstractPlayer thisPlayer : team) {
-                System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y, piece type(O/X): ");
-                int[] parameters = takeInput(in);
-                if (parameters.length == 0) {
-                    return false;
-                }
-                thisPlayer.put(parameters[0], parameters[1], parameters[2] == 0 ? "O" : "X");
-                display();
-                if (thisPlayer.isWinner()) {
-                    System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
-                    if (!ifContinue(in)) {
-                        return false;
-                    } else break;
-                } else if (board.isDraw()) {
-                    System.out.print("Draw! Want another round? (Yes/No) ");
-                    if (!ifContinue(in)) {
-                        return false;
-                    } else break;
-                }
-            }
+    protected boolean getRunningInputAndRun(AbstractPlayer player, Scanner in) {
+        System.out.print("Player " + player.getName() + " Enter your move x, y, piece type(O/X): ");
+        int[] parameters = takeInput(in);
+        if (parameters.length == 0) {
+            return false;
         }
+        player.put(parameters[0], parameters[1], parameters[2] == 0 ? "O" : "X");
+        display();
         return true;
     }
 

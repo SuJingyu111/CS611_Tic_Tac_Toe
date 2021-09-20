@@ -16,6 +16,7 @@ public class GamePlay {
     public void gameplay(){
         //TODO: What if team take turns?
         //TODO: Add comprehensible comments
+        //TODO: Better scalable winning condition
         while (true) {
             System.out.println("Games available: ");
             for (String gameName : gameNames) {

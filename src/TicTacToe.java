@@ -95,29 +95,46 @@ public class TicTacToe extends AbstractBoardGame {
 
     protected boolean makeMove(Scanner in) {
         for (List<AbstractPlayer> team : teamList) {
-            for (AbstractPlayer thisPlayer : team) {
-                System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y: ");
-                int[] parameters = takeInput(in);
-                if (parameters.length == 0) {
-                    return false;
-                }
-                thisPlayer.put(parameters[0], parameters[1], thisPlayer.getName().equals("1") ? "O" : "X");
-                display();
-
-                if (thisPlayer.isWinner()) {
-                    System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
-                    if (!ifContinue(in)) {
-                        return false;
-                    } else break;
-                } else if (board.isDraw()) {
-                    System.out.print("Draw! Want another round? (Yes/No) ");
-                    if (!ifContinue(in)) {
-                        return false;
-                    } else break;
-                }
+            //TODO: Edit for team play
+            AbstractPlayer thisPlayer = team.get(0);
+            if (!getRunningInputAndRun(thisPlayer, in)) {
+                return false;
+            }
+            int continuingStatus = getContinuingStatus(thisPlayer, in);
+            if (continuingStatus == 1) {
+                return true;
+            }
+            else if (continuingStatus == -1) {
+                return false;
             }
         }
         return true;
+    }
+
+    protected boolean getRunningInputAndRun(AbstractPlayer player, Scanner in) {
+        System.out.print("Player " + player.getName() + " Enter your move x, y: ");
+        int[] parameters = takeInput(in);
+        if (parameters.length == 0) {
+            return false;
+        }
+        player.put(parameters[0], parameters[1], player.getName().equals("1") ? "O" : "X");
+        display();
+        return true;
+    }
+
+    protected int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
+        if (thisPlayer.isWinner()) {
+            System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
+            if (!ifContinue(in)) {
+                return -1;
+            } else return 1;
+        } else if (board.isDraw()) {
+            System.out.print("Draw! Want another round? (Yes/No) ");
+            if (!ifContinue(in)) {
+                return -1;
+            } else return 1;
+        }
+        return 0;
     }
 
     protected boolean ifContinue(Scanner in) {
