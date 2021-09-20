@@ -4,6 +4,8 @@ public abstract class AbstractBoard {
 
     protected int r, c;
 
+    protected int pieceNameMaxLen;
+
     public AbstractBoard() {
         view = new AbstractPiece[3][3];
         r = 3;
@@ -19,15 +21,15 @@ public abstract class AbstractBoard {
     public String toDisplayString() {
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < r; i++) {
-            res.append("+--".repeat(Math.max(0, c)));
+            res.append(("+" + "-".repeat(pieceNameMaxLen + 1)).repeat(Math.max(0, c)));
             res.append("+\n");
             for (int j = 0; j < c; j++) {
                 res.append('|');
-                res.append(view[i][j] == null ? "  " : view[i][j].getName() + " ");
+                res.append(view[i][j] == null ? " ".repeat(pieceNameMaxLen + 1) : view[i][j].getName() + " ");
             }
             res.append("|\n");
         }
-        res.append("+--".repeat(Math.max(0, c)));
+        res.append(("+" + "-".repeat(pieceNameMaxLen + 1)).repeat(Math.max(0, c)));
         res.append("+\n");
         return res.toString();
     }
@@ -44,6 +46,10 @@ public abstract class AbstractBoard {
         return view[row][col] == null ? " " : view[row][col].getName();
     }
 
+    public AbstractPlayer getPieceOwner(int row, int col) {
+        return view[row][col] == null ? null : view[row][col].getOwner();
+    }
+
     public abstract void put(int row, int col, AbstractPiece piece);
 
     public abstract void clear();
@@ -51,4 +57,8 @@ public abstract class AbstractBoard {
     public abstract void display();
 
     public abstract boolean isDraw();
+
+    public abstract int[] getParameters();
+
+    public abstract int getWinningCriterion();
 }

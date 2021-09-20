@@ -9,6 +9,10 @@ public abstract class AbstractPlayer {
 
     protected Map<String, AbstractPiece> pieces;
 
+    public AbstractPlayer() {
+        pieces = new HashMap<>();
+    }
+
     public AbstractPlayer(String name, AbstractBoard board) {
         this.name = name;
         this.board = board;
@@ -22,6 +26,5 @@ public abstract class AbstractPlayer {
     public abstract void put(int row, int col, String pieceName);
 
     public abstract boolean isWinner();
-
 
 }

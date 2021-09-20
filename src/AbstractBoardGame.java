@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class AbstractBoardGame {
 
@@ -17,5 +18,9 @@ public abstract class AbstractBoardGame {
     public abstract void clear();
 
     public abstract void endDisplay();
+
+    protected abstract int[] takeInput(Scanner in);
+
+    protected abstract boolean makeMove(Scanner in);
 
 }

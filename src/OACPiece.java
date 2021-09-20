@@ -1,7 +1,9 @@
-public class OACPiece extends AbstractPiece {
+public class OACPiece extends TicTacToePiece {
 
-    public OACPiece(String name) {
-        super(name);
+    private OACPlayer owner;
+
+    public OACPiece(String name, OACPlayer owner) {
+        super(name, owner);
     }
 
 }

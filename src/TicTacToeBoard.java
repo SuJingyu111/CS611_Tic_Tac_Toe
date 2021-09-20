@@ -1,18 +1,20 @@
 class TicTacToeBoard extends AbstractBoard {
 
-    private int winningCriterion;
+    protected int winningCriterion;
 
-    private int remainingPos;
+    protected int remainingPos;
 
     public TicTacToeBoard() {
         super();
         winningCriterion = 3;
         remainingPos = 9;
+        pieceNameMaxLen = 1;
     }
 
     public TicTacToeBoard(int r, int c, int winningCriterion) {
         super(r, c);
         this.winningCriterion = winningCriterion;
+        remainingPos = r * c;
     }
 
     public void put(int row, int col, AbstractPiece piece) {

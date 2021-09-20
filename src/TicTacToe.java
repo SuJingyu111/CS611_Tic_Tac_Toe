@@ -1,3 +1,4 @@
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -6,11 +7,30 @@ public class TicTacToe extends AbstractBoardGame {
 
     public TicTacToe() {
         super(new TicTacToeBoard());
+        teamListInit(TicTacToePlayer.class);
+    }
+
+    public TicTacToe(int r, int c, int winningCriterion) {
+        super(new TicTacToeBoard(r, c, winningCriterion));
+        teamListInit(TicTacToePlayer.class);
+    }
+
+    protected void teamListInit(Class<?> playerClass) {
         teamList = new ArrayList<>();
         teamList.add(new ArrayList<>());
-        teamList.get(0).add(new TicTacToePlayer("O", (TicTacToeBoard) board));
-        teamList.add(new ArrayList<>());
-        teamList.get(1).add(new TicTacToePlayer("X", (TicTacToeBoard)board));
+        try {
+            Constructor<?> cons = playerClass.getConstructor(String.class, AbstractBoard.class);
+            teamList.get(0).add(getPlayer(cons.newInstance("1", board)));
+            teamList.add(new ArrayList<>());
+            teamList.get(1).add(getPlayer(cons.newInstance("2", board)));
+        }
+        catch (Exception e) {
+            System.err.println("reflection gone wrong");
+        }
+    }
+
+    protected AbstractPlayer getPlayer(Object obj) {
+        return (AbstractPlayer) obj;
     }
 
     public void run() {
@@ -43,7 +63,7 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
-    private int[] takeInput(Scanner in) {
+    protected int[] takeInput(Scanner in) {
         String input = in.nextLine();
         if (input.equalsIgnoreCase("exit")) {
             return new int[0];
@@ -73,7 +93,7 @@ public class TicTacToe extends AbstractBoardGame {
 
     }
 
-    private boolean makeMove(Scanner in) {
+    protected boolean makeMove(Scanner in) {
         for (List<AbstractPlayer> team : teamList) {
             for (AbstractPlayer thisPlayer : team) {
                 System.out.print("Player " + thisPlayer.getName() + " Enter your move x, y: ");
@@ -81,7 +101,7 @@ public class TicTacToe extends AbstractBoardGame {
                 if (parameters.length == 0) {
                     return false;
                 }
-                thisPlayer.put(parameters[0], parameters[1], thisPlayer.getName());
+                thisPlayer.put(parameters[0], parameters[1], thisPlayer.getName().equals("1") ? "O" : "X");
                 display();
 
                 if (thisPlayer.isWinner()) {
@@ -100,7 +120,7 @@ public class TicTacToe extends AbstractBoardGame {
         return true;
     }
 
-    private boolean ifContinue(Scanner in) {
+    protected boolean ifContinue(Scanner in) {
         String continueStr = in.nextLine();
         try {
             if (continueStr.equalsIgnoreCase("yes")) {
