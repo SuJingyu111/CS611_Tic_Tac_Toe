@@ -1,12 +1,19 @@
 //This is the class where the games run
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class GamePlay {
 
-    static String[] gameNames = new String[]{"TicTacToe", "OrderAndChaos"};
+    private static Set<String> gameNames;
 
-    public static void main (String[] args) {
+    public GamePlay() {
+        gameNames = new HashSet<>(Arrays.asList("TicTacToe", "OrderAndChaos"));
+    }
+
+    public void gameplay(){
         //TODO: What if team take turns?
         //TODO: Add comprehensible comments
         while (true) {
@@ -19,15 +26,15 @@ public class GamePlay {
             Scanner in = new Scanner(System.in);
             while (true) {
                 String gameName = in.nextLine();
-                if (gameName.equalsIgnoreCase("TicTacToe")) {
-                    AbstractBoardGame game = new TicTacToe();
-                    game.run();
-                    break;
-                }
-                else if (gameName.equalsIgnoreCase("OrderAndChaos")) {
-                    AbstractBoardGame game = new OrderAndChaos();
-                    game.run();
-                    break;
+                if (gameNames.contains(gameName)) {
+                    try{
+                        AbstractBoardGame game = (AbstractBoardGame) Class.forName(gameName).getDeclaredConstructor().newInstance();
+                        game.run();
+                        break;
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     System.out.println("No such game! Enter game name again: ");
@@ -38,7 +45,7 @@ public class GamePlay {
             while (true) {
                 String ifAnotherGame = in.nextLine();
                 if (ifAnotherGame.equalsIgnoreCase("yes")) {
-                    continue;
+                    break;
                 }
                 else if (ifAnotherGame.equalsIgnoreCase("no")) {
                     ifExit = true;

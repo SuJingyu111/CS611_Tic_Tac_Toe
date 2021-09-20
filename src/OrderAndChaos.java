@@ -32,7 +32,6 @@ public class OrderAndChaos extends TicTacToe {
             return new int[0];
         }
         String[] parameters = input.split("( *, *)");
-        System.out.println(parameters.length);
         try {
             if (parameters.length < 3) {
                 throw new NumberFormatException();
