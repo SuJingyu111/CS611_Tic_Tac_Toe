@@ -72,7 +72,6 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
-    @Override
     protected boolean makeMove(Scanner in, int expectedParameterNum) {
         for (List<AbstractPlayer> team : teamList) {
             //TODO: Edit for team play
@@ -91,7 +90,6 @@ public class TicTacToe extends AbstractBoardGame {
         return true;
     }
 
-    @Override
     protected int[] takeInput(Scanner in, int expectedNum) {
         String[] parameters = getInputStrParameters(in);
         if (parameters.length == 0) {
