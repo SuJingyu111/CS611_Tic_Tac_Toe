@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class OrderAndChaos extends TicTacToe {
 
+    private final int parameterNum = 3;
+
     public OrderAndChaos() {
         board = new OACBoard();
         teamListInit(OACPlayer.class);
@@ -13,17 +15,8 @@ public class OrderAndChaos extends TicTacToe {
         teamListInit(OACPlayer.class);
     }
 
-    public void run() {
-        OrderAndChaos game = new OrderAndChaos();
+    protected void printOpeningMessage() {
         System.out.println("Welcome to Order And Chaos ver 0.1 ");
-        game.display();
-        Scanner in = new Scanner(System.in);
-        while (true) {
-            if (!game.makeMove(in, 3)) {
-                game.endDisplay();
-                break;
-            }
-        }
     }
 
     protected String[] checkOtherParameters(String[] parameters) throws Exception {

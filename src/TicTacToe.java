@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class TicTacToe extends AbstractBoardGame {
 
+    private final int parameterNum = 2;
+
     public TicTacToe() {
         super(new TicTacToeBoard());
         teamListInit(TicTacToePlayer.class);
@@ -13,6 +15,18 @@ public class TicTacToe extends AbstractBoardGame {
     public TicTacToe(int r, int c, int winningCriterion) {
         super(new TicTacToeBoard(r, c, winningCriterion));
         teamListInit(TicTacToePlayer.class);
+    }
+
+    public void run() {
+        printOpeningMessage();
+        display();
+        Scanner in = new Scanner(System.in);
+        while (true) {
+            if (!makeMove(in, parameterNum)) {
+                endDisplay();
+                break;
+            }
+        }
     }
 
     protected void teamListInit(Class<?> playerClass) {
@@ -29,21 +43,12 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
-    protected AbstractPlayer getPlayer(Object obj) {
+    private AbstractPlayer getPlayer(Object obj) {
         return (AbstractPlayer) obj;
     }
 
-    public void run() {
-        TicTacToe game = new TicTacToe();
+    protected void printOpeningMessage() {
         System.out.println("Welcome to TicTacToe ver 0.2 ");
-        game.display();
-        Scanner in = new Scanner(System.in);
-        while (true) {
-            if (!game.makeMove(in, 2)) {
-                game.endDisplay();
-                break;
-            }
-        }
     }
 
     public void display() {
