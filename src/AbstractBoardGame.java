@@ -19,8 +19,8 @@ public abstract class AbstractBoardGame {
 
     public abstract void endDisplay();
 
-    protected abstract int[] takeInput(Scanner in);
+    protected abstract int[] takeInput(Scanner in, int expectedNum);
 
-    protected abstract boolean makeMove(Scanner in);
+    protected abstract boolean makeMove(Scanner in, int expectedParameterNum);
 
 }

@@ -19,58 +19,39 @@ public class OrderAndChaos extends TicTacToe {
         game.display();
         Scanner in = new Scanner(System.in);
         while (true) {
-            if (!game.makeMove(in)) {
+            if (!game.makeMove(in, 3)) {
                 game.endDisplay();
                 break;
             }
         }
     }
 
-    protected int[] takeInput(Scanner in) {
-        String input = in.nextLine();
-        if (input.equalsIgnoreCase("exit")) {
+    protected String[] checkOtherParameters(String[] parameters) throws Exception {
+        if (!(parameters[2].equals("O") || parameters[2].equals("X"))) {
+            throw new InvalidPieceException();
+        }
+        String[] otherParameters = new String[1];
+        otherParameters[0] = parameters[2];
+        return otherParameters;
+    }
+
+    protected int[] getFinalInput(int row, int col, String[] otherParameters) {
+        return new int[]{row, col, otherParameters[0].equals("O") ? 0 : 1};
+    }
+
+    protected int[] inputExceptionHandler(Exception e, Scanner in, int expectedNum) {
+        if (e instanceof InvalidPieceException) {
+            System.out.println(e.getMessage());
+            return takeInput(in, expectedNum);
+        }
+        else {
             return new int[0];
-        }
-        String[] parameters = input.split("( *, *)");
-        try {
-            if (parameters.length < 3) {
-                throw new NumberFormatException();
-            }
-            int row = Integer.parseInt(parameters[0]), col = Integer.parseInt(parameters[1]);
-            String priceTypeStr = parameters[2];
-            while (!(priceTypeStr.equals("O") || priceTypeStr.equals("X"))) {
-                System.out.print("Invalid piece type! ");
-                input = in.nextLine();
-                parameters = input.split("( *, *)");
-                row = Integer.parseInt(parameters[0]);
-                col = Integer.parseInt(parameters[1]);
-                priceTypeStr = parameters[2];
-            }
-            if (!board.inBound(row, col)) {
-                throw new ArrayIndexOutOfBoundsException();
-            }
-            while (!board.isValidPos(row, col)) {
-                System.out.print("Position taken! Input row, column and piece type again: ");
-                input = in.nextLine();
-                parameters = input.split("( *, *)");
-                row = Integer.parseInt(parameters[0]);
-                col = Integer.parseInt(parameters[1]);
-                priceTypeStr = parameters[2];
-            }
-            return new int[]{row, col, priceTypeStr.equals("O") ? 0 : 1};
-        } catch (NumberFormatException e) {
-            System.out.print("Invalid input! Try again: ");
-            return takeInput(in);
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            System.out.print("Number out of bound! Try again: ");
-            return takeInput(in);
         }
     }
 
-    protected boolean getRunningInputAndRun(AbstractPlayer player, Scanner in) {
+    protected boolean getRunningInputAndMove(AbstractPlayer player, Scanner in, int expectedParameterNum) {
         System.out.print("Player " + player.getName() + " Enter your move x, y, piece type(O/X): ");
-        int[] parameters = takeInput(in);
+        int[] parameters = takeInput(in, 3);
         if (parameters.length == 0) {
             return false;
         }

@@ -39,7 +39,7 @@ public abstract class AbstractBoard {
     }
 
     public boolean inBound(int row, int col) {
-        return row < r || row >= 0 || col < c || col >= 0;
+        return row < r && row >= 0 && col < c && col >= 0;
     }
 
     public String getPieceName(int row, int col) {

@@ -39,7 +39,7 @@ public class TicTacToe extends AbstractBoardGame {
         game.display();
         Scanner in = new Scanner(System.in);
         while (true) {
-            if (!game.makeMove(in)) {
+            if (!game.makeMove(in, 2)) {
                 game.endDisplay();
                 break;
             }
@@ -63,41 +63,11 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
-    protected int[] takeInput(Scanner in) {
-        String input = in.nextLine();
-        if (input.equalsIgnoreCase("exit")) {
-            return new int[0];
-        }
-        String[] parameters = input.split("( *, *)");
-        try {
-            int row = Integer.parseInt(parameters[0]), col = Integer.parseInt(parameters[1]);
-            if (!board.inBound(row, col)) {
-                throw new ArrayIndexOutOfBoundsException();
-            }
-            while (!board.isValidPos(row, col)) {
-                System.out.print("Position taken! Switch to another position: ");
-                input = in.nextLine();
-                parameters = input.split("( *, *)");
-                row = Integer.parseInt(parameters[0]);
-                col = Integer.parseInt(parameters[1]);
-            }
-            return new int[]{row, col};
-        } catch (NumberFormatException e) {
-            System.out.print("Invalid input! Try again: ");
-            return takeInput(in);
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            System.out.print("Number out of bound! Try again: ");
-            return takeInput(in);
-        }
-
-    }
-
-    protected boolean makeMove(Scanner in) {
+    protected boolean makeMove(Scanner in, int expectedParameterNum) {
         for (List<AbstractPlayer> team : teamList) {
             //TODO: Edit for team play
             AbstractPlayer thisPlayer = team.get(0);
-            if (!getRunningInputAndRun(thisPlayer, in)) {
+            if (!getRunningInputAndMove(thisPlayer, in, expectedParameterNum)) {
                 return false;
             }
             int continuingStatus = getContinuingStatus(thisPlayer, in);
@@ -111,9 +81,9 @@ public class TicTacToe extends AbstractBoardGame {
         return true;
     }
 
-    protected boolean getRunningInputAndRun(AbstractPlayer player, Scanner in) {
+    protected boolean getRunningInputAndMove(AbstractPlayer player, Scanner in, int expectedParameterNum) {
         System.out.print("Player " + player.getName() + " Enter your move x, y: ");
-        int[] parameters = takeInput(in);
+        int[] parameters = takeInput(in, expectedParameterNum);
         if (parameters.length == 0) {
             return false;
         }
@@ -122,7 +92,64 @@ public class TicTacToe extends AbstractBoardGame {
         return true;
     }
 
-    protected int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
+    protected int[] takeInput(Scanner in, int expectedNum) {
+        String[] parameters = getInputStrParameters(in);
+        if (parameters.length == 0) {
+            return new int[0];
+        }
+        try {
+            parameterNumberCheck(expectedNum, parameters);
+            int row = Integer.parseInt(parameters[0]), col = Integer.parseInt(parameters[1]);
+            if (!board.inBound(row, col)) {
+                throw new ArrayIndexOutOfBoundsException("Number out of bound! Try again: ");
+            }
+            if (!board.isValidPos(row, col)) {
+                throw new PositionTakenException("Position taken! Switch to another position: ");
+            }
+            String[] otherParameters = checkOtherParameters(parameters);
+            return getFinalInput(row, col, otherParameters);
+        }
+        catch (NumberFormatException e) {
+            System.out.print("Invalid input! Try again: ");
+            return takeInput(in, expectedNum);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.print(e.getMessage());
+            //e.printStackTrace();
+            return takeInput(in, expectedNum);
+        }
+        catch (PositionTakenException e) {
+            System.out.println(e.getMessage());
+            return takeInput(in, expectedNum);
+        }
+        catch (Exception e) {
+            return inputExceptionHandler(e, in, expectedNum);
+        }
+    }
+
+    private String[] getInputStrParameters(Scanner in) {
+        String input = in.nextLine();
+        if (input.equalsIgnoreCase("exit")) {
+            return new String[0];
+        }
+        return input.split("( *, *)");
+    }
+
+    protected void parameterNumberCheck(int expectedNum, String[] parameters) throws ArrayIndexOutOfBoundsException {
+        if (expectedNum != parameters.length) {
+            throw new ArrayIndexOutOfBoundsException("Incorrect number of parameters! Expect: " + expectedNum + ", get: " + parameters.length + ", try again: ");
+        }
+    }
+
+    protected String[] checkOtherParameters(String[] parameters) throws Exception { return new String[0]; }
+
+    protected int[] getFinalInput(int row, int col, String[] otherParameters) {
+        return new int[]{row, col};
+    }
+
+    protected int[] inputExceptionHandler(Exception e, Scanner in, int expectedNum) { return new int[0]; }
+
+    private int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
         if (thisPlayer.isWinner()) {
             System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
             if (!ifContinue(in)) {
@@ -137,7 +164,7 @@ public class TicTacToe extends AbstractBoardGame {
         return 0;
     }
 
-    protected boolean ifContinue(Scanner in) {
+    private boolean ifContinue(Scanner in) {
         String continueStr = in.nextLine();
         try {
             if (continueStr.equalsIgnoreCase("yes")) {
