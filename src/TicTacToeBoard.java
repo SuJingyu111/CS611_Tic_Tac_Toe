@@ -17,29 +17,35 @@ class TicTacToeBoard extends AbstractBoard {
         remainingPos = r * c;
     }
 
+    @Override
     public void put(int row, int col, AbstractPiece piece) {
         remainingPos--;
         view[row][col] = piece;
     }
 
+    @Override
     public void clear() {
         view = new AbstractPiece[r][c];
         remainingPos = r * c;
     }
 
+    @Override
     public void display() {
         System.out.println(toDisplayString());
     }
 
+    @Override
+    public boolean isDraw() {
+        return remainingPos == 0;
+    }
+
+    @Override
     public int[] getParameters() {
         return new int[]{r, c};
     }
 
+    @Override
     public int getWinningCriterion() {
         return winningCriterion;
-    }
-
-    public boolean isDraw() {
-        return remainingPos == 0;
     }
 }

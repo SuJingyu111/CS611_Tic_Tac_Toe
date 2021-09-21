@@ -8,6 +8,7 @@ public class OACPlayer extends TicTacToePlayer {
         pieces.put("X", new OACPiece("X" + name, this));
     }
 
+    @Override
     protected int getLength(int[] direction, int r, int c) {
         int step = 0;
         String pieceName = board.getPieceName(lastMoveRow, lastMoveCol);

@@ -15,10 +15,12 @@ public class OrderAndChaos extends TicTacToe {
         teamListInit(OACPlayer.class);
     }
 
+    @Override
     protected void printOpeningMessage() {
         System.out.println("Welcome to Order And Chaos ver 0.1 ");
     }
 
+    @Override
     protected String[] checkOtherParameters(String[] parameters) throws Exception {
         if (!(parameters[2].equals("O") || parameters[2].equals("X"))) {
             throw new InvalidPieceException();
@@ -28,10 +30,12 @@ public class OrderAndChaos extends TicTacToe {
         return otherParameters;
     }
 
+    @Override
     protected int[] getFinalInput(int row, int col, String[] otherParameters) {
         return new int[]{row, col, otherParameters[0].equals("O") ? 0 : 1};
     }
 
+    @Override
     protected int[] inputExceptionHandler(Exception e, Scanner in, int expectedNum) {
         if (e instanceof InvalidPieceException) {
             System.out.println(e.getMessage());
@@ -42,6 +46,7 @@ public class OrderAndChaos extends TicTacToe {
         }
     }
 
+    @Override
     protected boolean getRunningInputAndMove(AbstractPlayer player, Scanner in, int expectedParameterNum) {
         System.out.print("Player " + player.getName() + " Enter your move x, y, piece type(O/X): ");
         int[] parameters = takeInput(in, 3);

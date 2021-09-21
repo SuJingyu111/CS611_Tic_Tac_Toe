@@ -17,6 +17,7 @@ public class TicTacToe extends AbstractBoardGame {
         teamListInit(TicTacToePlayer.class);
     }
 
+    @Override
     public void run() {
         printOpeningMessage();
         display();
@@ -51,14 +52,17 @@ public class TicTacToe extends AbstractBoardGame {
         System.out.println("Welcome to TicTacToe ver 0.2 ");
     }
 
+    @Override
     public void display() {
         board.display();
     }
 
+    @Override
     public void clear() {
         board.clear();
     }
 
+    @Override
     public void endDisplay() {
         System.out.println("End of the game!");
         for (List<AbstractPlayer> team : teamList) {
@@ -68,6 +72,7 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
+    @Override
     protected boolean makeMove(Scanner in, int expectedParameterNum) {
         for (List<AbstractPlayer> team : teamList) {
             //TODO: Edit for team play
@@ -86,17 +91,7 @@ public class TicTacToe extends AbstractBoardGame {
         return true;
     }
 
-    protected boolean getRunningInputAndMove(AbstractPlayer player, Scanner in, int expectedParameterNum) {
-        System.out.print("Player " + player.getName() + " Enter your move x, y: ");
-        int[] parameters = takeInput(in, expectedParameterNum);
-        if (parameters.length == 0) {
-            return false;
-        }
-        player.put(parameters[0], parameters[1], player.getName().equals("1") ? "O" : "X");
-        display();
-        return true;
-    }
-
+    @Override
     protected int[] takeInput(Scanner in, int expectedNum) {
         String[] parameters = getInputStrParameters(in);
         if (parameters.length == 0) {
@@ -130,6 +125,17 @@ public class TicTacToe extends AbstractBoardGame {
         catch (Exception e) {
             return inputExceptionHandler(e, in, expectedNum);
         }
+    }
+
+    protected boolean getRunningInputAndMove(AbstractPlayer player, Scanner in, int expectedParameterNum) {
+        System.out.print("Player " + player.getName() + " Enter your move x, y: ");
+        int[] parameters = takeInput(in, expectedParameterNum);
+        if (parameters.length == 0) {
+            return false;
+        }
+        player.put(parameters[0], parameters[1], player.getName().equals("1") ? "O" : "X");
+        display();
+        return true;
     }
 
     protected void parameterNumberCheck(int expectedNum, String[] parameters) throws ArrayIndexOutOfBoundsException {

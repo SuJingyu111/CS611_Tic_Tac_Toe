@@ -24,14 +24,16 @@ class TicTacToePlayer extends AbstractPlayer{
         pieces.put(pieceName, new TicTacToePiece(pieceName, this));
     }
 
-    public int getWinCnt() { return winCnt; };
+    public int getWinCnt() { return winCnt; }
 
+    @Override
     public void put(int row, int col, String pieceName) {
         lastMoveRow = row;
         lastMoveCol = col;
         board.put(row, col, pieces.get(pieceName));
     }
 
+    @Override
     public boolean isWinner() {
         int[] parameters = board.getParameters();
         int r = parameters[0], c = parameters[1];
