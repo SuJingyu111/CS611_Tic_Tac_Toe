@@ -39,21 +39,7 @@ public class GamePlay {
                 }
             }
             System.out.println("Do you want to play another game? (yes/no) ");
-            boolean ifExit = false;
-            while (true) {
-                String ifAnotherGame = in.nextLine();
-                if (ifAnotherGame.equalsIgnoreCase("yes")) {
-                    break;
-                }
-                else if (ifAnotherGame.equalsIgnoreCase("no")) {
-                    ifExit = true;
-                    break;
-                }
-                else {
-                    System.out.println("Invalid Input! Try again! ");
-                }
-            }
-            if (ifExit) {
+            if (!Utils.takeYes(in)) {
                 System.out.println("Thank you!");
                 break;
             }

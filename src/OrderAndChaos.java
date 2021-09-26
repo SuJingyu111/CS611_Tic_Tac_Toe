@@ -6,13 +6,11 @@ public class OrderAndChaos extends TicTacToe {
 
     public OrderAndChaos() {
         board = new Board(6, 6, 5);
-        //TODO: MIGHT BE CHANGED
         teamListInit(OACPlayer.class);
     }
 
     public OrderAndChaos(int r, int c, int winningCriterion) {
         board = new Board(r, c, winningCriterion);
-        //TODO: MIGHT BE CHANGED
         teamListInit(OACPlayer.class);
     }
 
