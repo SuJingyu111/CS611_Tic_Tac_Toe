@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Utils {
 
     public static boolean takeYes(Scanner in) {
-        String continueStr = in.nextLine();
+        String continueStr = in.nextLine().trim();
         try {
             if (continueStr.equalsIgnoreCase("yes")) {
                 return true;
