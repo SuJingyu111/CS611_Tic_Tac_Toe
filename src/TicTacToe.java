@@ -138,31 +138,8 @@ public class TicTacToe extends AbstractBoardGame {
 
     protected int[] inputExceptionHandler(Exception e, Scanner in, int expectedNum) { return new int[0]; }
 
-    //TODO: Alter this for OAC
-    private int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
-        if (isWinner(thisPlayer)) {
-            System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
-            if (!Utils.takeYes(in)) {
-                return -1;
-            } else {
-                clear();
-                display();
-                return 1;
-            }
-        } else if (board.isDraw()) {
-            System.out.print("Draw! Want another round? (Yes/No) ");
-            if (!Utils.takeYes(in)) {
-                return -1;
-            } else {
-                clear();
-                display();
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-    public boolean isWinner(AbstractPlayer thisPlayer) {
+    @Override
+    protected boolean isWinner(AbstractPlayer thisPlayer) {
         int[] parameters = board.getParameters();
         int[] playerLastPos = ((TicTacToePlayer)thisPlayer).getLastPos();
         int r = parameters[0], c = parameters[1];
@@ -179,7 +156,7 @@ public class TicTacToe extends AbstractBoardGame {
         return false;
     }
 
-    protected int getLength(int[] direction, int r, int c, int[] playerLastPos) {
+    private int getLength(int[] direction, int r, int c, int[] playerLastPos) {
         int step = 0, lastMoveRow = playerLastPos[0], lastMoveCol = playerLastPos[1];
         while (lastMoveRow + (step + 1) * direction[0] < r && lastMoveRow + (step + 1) * direction[0] >= 0
                 && lastMoveCol + (step + 1) * direction[1] < c && lastMoveCol + (step + 1) * direction[1] >= 0) {
@@ -190,5 +167,34 @@ public class TicTacToe extends AbstractBoardGame {
             else break;
         }
         return step;
+    }
+
+    @Override
+    protected boolean isDraw() {
+        return ((Board)board).isFull();
+    }
+
+    //TODO: Alter this for OAC
+    private int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
+        if (isWinner(thisPlayer)) {
+            System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
+            if (!Utils.takeYes(in)) {
+                return -1;
+            } else {
+                clear();
+                display();
+                return 1;
+            }
+        } else if (isDraw()) {
+            System.out.print("Draw! Want another round? (Yes/No) ");
+            if (!Utils.takeYes(in)) {
+                return -1;
+            } else {
+                clear();
+                display();
+                return 1;
+            }
+        }
+        return 0;
     }
 }

@@ -18,6 +18,10 @@ class Board extends AbstractBoard {
         pieceNameMaxLen = 1;
     }
 
+    public boolean isFull() {
+        return remainingPos == 0;
+    }
+
     @Override
     public void put(int row, int col, AbstractPiece piece) {
         remainingPos--;
@@ -33,11 +37,6 @@ class Board extends AbstractBoard {
     @Override
     public void display() {
         System.out.println(toDisplayString());
-    }
-
-    @Override
-    public boolean isDraw() {
-        return remainingPos == 0;
     }
 
     @Override

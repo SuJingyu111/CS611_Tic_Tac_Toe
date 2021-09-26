@@ -56,8 +56,6 @@ public abstract class AbstractBoard {
 
     public abstract void display();
 
-    public abstract boolean isDraw();
-
     public abstract int[] getParameters();
 
     public abstract int getWinningCriterion();
