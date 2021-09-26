@@ -25,6 +25,7 @@ public abstract class AbstractPlayer {
 
     public abstract void put(int row, int col, String pieceName);
 
+    //TODO: Put this in game class, whole lot of work to do XD
     public abstract boolean isWinner();
 
 }

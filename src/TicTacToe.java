@@ -9,10 +9,12 @@ public class TicTacToe extends AbstractBoardGame {
 
     public TicTacToe() {
         super(new TicTacToeBoard());
+        //TODO: MIGHT BE CHANGED
         teamListInit(TicTacToePlayer.class);
     }
 
     public TicTacToe(int r, int c, int winningCriterion) {
+        //TODO: MIGHT BE CHANGED
         super(new TicTacToeBoard(r, c, winningCriterion));
         teamListInit(TicTacToePlayer.class);
     }
@@ -30,6 +32,7 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
+    //TODO: This method can be put in abstract, and modified for team play.
     protected void teamListInit(Class<?> playerClass) {
         teamList = new ArrayList<>();
         teamList.add(new ArrayList<>());

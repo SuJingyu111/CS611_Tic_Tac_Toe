@@ -21,7 +21,7 @@ class TicTacToePlayer extends AbstractPlayer{
         winCnt = 0;
         directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
         String pieceName = name.equals("1") ? "O" : "X";
-        pieces.put(pieceName, new TicTacToePiece(pieceName, this));
+        pieces.put(pieceName, new Piece(pieceName, this));
     }
 
     public int getWinCnt() { return winCnt; }
@@ -54,7 +54,8 @@ class TicTacToePlayer extends AbstractPlayer{
         int step = 0;
         while (lastMoveRow + (step + 1) * direction[0] < r && lastMoveRow + (step + 1) * direction[0] >= 0
                 && lastMoveCol + (step + 1) * direction[1] < c && lastMoveCol + (step + 1) * direction[1] >= 0) {
-            if (board.getPieceOwner(lastMoveRow + (step + 1) * direction[0], lastMoveCol + (step + 1) * direction[1]) == this) {
+            if (board.getPieceName(lastMoveRow + (step + 1) * direction[0], lastMoveCol + (step + 1) * direction[1])
+                    .equals(board.getPieceName(lastMoveRow, lastMoveCol))) {
                 step++;
             }
             else break;
