@@ -174,7 +174,6 @@ public class TicTacToe extends AbstractBoardGame {
         return ((Board)board).isFull();
     }
 
-    //TODO: Alter this for OAC
     private int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
         if (isWinner(thisPlayer)) {
             System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");

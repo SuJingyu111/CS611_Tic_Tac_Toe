@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class OrderAndChaos extends TicTacToe {
-    //TODO: Game message display needs to be altered
+
     private final int parameterNum = 3;
 
     public OrderAndChaos() {
@@ -57,4 +57,18 @@ public class OrderAndChaos extends TicTacToe {
         return true;
     }
 
+    @Override
+    protected boolean isWinner(AbstractPlayer thisPlayer) {
+        if (thisPlayer.getName().equals("Order")) {
+            return super.isWinner(thisPlayer);
+        }
+        else {
+            return ((Board)board).isFull();
+        }
+    }
+
+    @Override
+    protected boolean isDraw() {
+        return false;
+    }
 }
