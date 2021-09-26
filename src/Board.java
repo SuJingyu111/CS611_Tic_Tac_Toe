@@ -15,6 +15,7 @@ class Board extends AbstractBoard {
         super(r, c);
         this.winningCriterion = winningCriterion;
         remainingPos = r * c;
+        pieceNameMaxLen = 1;
     }
 
     @Override
