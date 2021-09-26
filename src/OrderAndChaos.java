@@ -6,12 +6,12 @@ public class OrderAndChaos extends TicTacToe {
 
     public OrderAndChaos() {
         board = new Board(6, 6, 5);
-        teamListInit(OACPlayer.class);
+        teamListInit(OACPlayer.class, 2, 1, new String[]{"Order", "Chaos"});
     }
 
     public OrderAndChaos(int r, int c, int winningCriterion) {
         board = new Board(r, c, winningCriterion);
-        teamListInit(OACPlayer.class);
+        teamListInit(OACPlayer.class, 2, 1, new String[]{"Order", "Chaos"});
     }
 
     @Override

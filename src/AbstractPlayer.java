@@ -9,6 +9,8 @@ public abstract class AbstractPlayer {
 
     protected Map<String, AbstractPiece> pieces;
 
+    protected int winCnt;
+
     public AbstractPlayer() {
         pieces = new HashMap<>();
     }
@@ -22,6 +24,8 @@ public abstract class AbstractPlayer {
     public String getName() {
         return name;
     }
+
+    public int getWinCnt() { return winCnt; }
 
     public abstract void put(int row, int col, String pieceName);
 

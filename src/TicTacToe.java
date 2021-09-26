@@ -7,12 +7,12 @@ public class TicTacToe extends AbstractBoardGame {
 
     public TicTacToe() {
         super(new Board());
-        teamListInit(TicTacToePlayer.class);
+        teamListInit(TicTacToePlayer.class, 2, 1, new String[]{"O", "X"});
     }
 
     public TicTacToe(int r, int c, int winningCriterion) {
         super(new Board(r, c, winningCriterion));
-        teamListInit(TicTacToePlayer.class);
+        teamListInit(TicTacToePlayer.class,2, 1, new String[]{"O", "X"});
     }
 
     @Override
@@ -29,10 +29,14 @@ public class TicTacToe extends AbstractBoardGame {
     }
 
     //This method can be put in abstract.
-    protected void teamListInit(Class<?> playerClass) {
+
+    protected void teamListInit(Class<?> playerClass, int teamNum, int playerNum, String[] teamNames) {
         teamList = new ArrayList<>();
-        teamList.add(new Team(1, playerClass, new String[]{"1"}, board));
-        teamList.add(new Team(1, playerClass, new String[]{"2"}, board));
+        for (int i = 0; i < teamNum; i++) {
+            Team newTeam = new Team(playerNum, playerClass, new String[]{"1"}, board);
+            newTeam.setTeamName(teamNames[i]);
+            teamList.add(newTeam);
+        }
     }
 
     private AbstractPlayer getPlayer(Object obj) {
@@ -57,8 +61,7 @@ public class TicTacToe extends AbstractBoardGame {
     public void endDisplay() {
         System.out.println("End of the game!");
         for (Team team : teamList) {
-            AbstractPlayer p = team.getRepresentingPlayer();
-            System.out.println("Player " + p.getName() + " won " + ((TicTacToePlayer)p).getWinCnt() + " time(s). ");
+            System.out.println(team.getTeamName() + " won " + team.getWinCnt() + " time(s). ");
         }
     }
 
@@ -132,6 +135,7 @@ public class TicTacToe extends AbstractBoardGame {
 
     protected int[] inputExceptionHandler(Exception e, Scanner in, int expectedNum) { return new int[0]; }
 
+    //TODO: Alter this for OAC
     private int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
         if (thisPlayer.isWinner()) {
             System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");

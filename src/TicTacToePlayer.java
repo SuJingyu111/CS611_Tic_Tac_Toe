@@ -2,8 +2,6 @@ class TicTacToePlayer extends AbstractPlayer{
 
     protected int lastMoveRow, lastMoveCol;
 
-    protected int winCnt;
-
     protected final int[][] directions;
 
     public TicTacToePlayer() {
@@ -23,8 +21,6 @@ class TicTacToePlayer extends AbstractPlayer{
         String pieceName = name.equals("1") ? "O" : "X";
         pieces.put(pieceName, new Piece(pieceName, this));
     }
-
-    public int getWinCnt() { return winCnt; }
 
     @Override
     public void put(int row, int col, String pieceName) {

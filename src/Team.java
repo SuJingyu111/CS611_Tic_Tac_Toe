@@ -5,6 +5,8 @@ import java.util.Random;
 
 public class Team {
 
+    private String name;
+
     private List<AbstractPlayer> members;
 
     private int representingPlayerIdx;
@@ -35,5 +37,17 @@ public class Team {
     public void setRandomRepresentingPlayer() {
         Random rand = new Random();
         representingPlayerIdx = rand.nextInt(members.size());
+    }
+
+    public String getTeamName() { return name; }
+
+    public void setTeamName(String name) { this.name = name; }
+
+    public int getWinCnt() {
+        int cnt = 0;
+        for (AbstractPlayer p : members) {
+            cnt += p.getWinCnt();
+        }
+        return cnt;
     }
 }
