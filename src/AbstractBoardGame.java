@@ -18,4 +18,5 @@ public abstract class AbstractBoardGame {
 
     public abstract void endDisplay();
 
+    public abstract boolean isWinner(AbstractPlayer thisPlayer);
 }

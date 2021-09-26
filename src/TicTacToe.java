@@ -5,6 +5,8 @@ public class TicTacToe extends AbstractBoardGame {
 
     private final int parameterNum = 2;
 
+    int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
+
     public TicTacToe() {
         super(new Board());
         teamListInit(TicTacToePlayer.class, 2, 1, new String[]{"O", "X"});
@@ -33,7 +35,7 @@ public class TicTacToe extends AbstractBoardGame {
     protected void teamListInit(Class<?> playerClass, int teamNum, int playerNum, String[] teamNames) {
         teamList = new ArrayList<>();
         for (int i = 0; i < teamNum; i++) {
-            Team newTeam = new Team(playerNum, playerClass, new String[]{"1"}, board);
+            Team newTeam = new Team(playerNum, playerClass, new String[]{teamNames[i]}, board);
             newTeam.setTeamName(teamNames[i]);
             teamList.add(newTeam);
         }
@@ -67,11 +69,11 @@ public class TicTacToe extends AbstractBoardGame {
 
     protected boolean makeMove(Scanner in, int expectedParameterNum) {
         for (Team team : teamList) {
-            AbstractPlayer thisPlayer = team.getRepresentingPlayer();
-            if (!getRunningInputAndMove(thisPlayer, in, expectedParameterNum)) {
+            System.out.println(team.getTeamName());
+            if (!getRunningInputAndMove(team, in, expectedParameterNum)) {
                 return false;
             }
-            int continuingStatus = getContinuingStatus(thisPlayer, in);
+            int continuingStatus = getContinuingStatus(team.getRepresentingPlayer(), in);
             if (continuingStatus == 1) {
                 return true;
             }
@@ -116,13 +118,14 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
-    protected boolean getRunningInputAndMove(AbstractPlayer player, Scanner in, int expectedParameterNum) {
-        System.out.print("Player " + player.getName() + " Enter your move x, y: ");
+    protected boolean getRunningInputAndMove(Team team, Scanner in, int expectedParameterNum) {
+        AbstractPlayer player = team.getRepresentingPlayer();
+        System.out.print("Player " + team.getTeamName() + " Enter your move x, y: ");
         int[] parameters = takeInput(in, expectedParameterNum);
         if (parameters.length == 0) {
             return false;
         }
-        player.put(parameters[0], parameters[1], player.getName().equals("1") ? "O" : "X");
+        player.put(parameters[0], parameters[1], team.getTeamName().equals("O") ? "O" : "X");
         display();
         return true;
     }
@@ -137,7 +140,7 @@ public class TicTacToe extends AbstractBoardGame {
 
     //TODO: Alter this for OAC
     private int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
-        if (thisPlayer.isWinner()) {
+        if (isWinner(thisPlayer)) {
             System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");
             if (!Utils.takeYes(in)) {
                 return -1;
@@ -157,5 +160,35 @@ public class TicTacToe extends AbstractBoardGame {
             }
         }
         return 0;
+    }
+
+    public boolean isWinner(AbstractPlayer thisPlayer) {
+        int[] parameters = board.getParameters();
+        int[] playerLastPos = ((TicTacToePlayer)thisPlayer).getLastPos();
+        int r = parameters[0], c = parameters[1];
+        int step1 = 0, step2 = 0, winningCriterion = board.getWinningCriterion();
+        for (int i = 0; i < 4; i++) {
+            int[] direction1 = directions[2 * i], direction2 = directions[2 * i + 1];
+            step1 = getLength(direction1, r, c ,playerLastPos);
+            step2 = getLength(direction2, r, c, playerLastPos);
+            if (step1 + step2 + 1 >= winningCriterion) {
+                thisPlayer.incrementWinCnt();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected int getLength(int[] direction, int r, int c, int[] playerLastPos) {
+        int step = 0, lastMoveRow = playerLastPos[0], lastMoveCol = playerLastPos[1];
+        while (lastMoveRow + (step + 1) * direction[0] < r && lastMoveRow + (step + 1) * direction[0] >= 0
+                && lastMoveCol + (step + 1) * direction[1] < c && lastMoveCol + (step + 1) * direction[1] >= 0) {
+            if (board.getPieceName(lastMoveRow + (step + 1) * direction[0], lastMoveCol + (step + 1) * direction[1])
+                    .equals(board.getPieceName(lastMoveRow, lastMoveCol))) {
+                step++;
+            }
+            else break;
+        }
+        return step;
     }
 }

@@ -27,9 +27,7 @@ public abstract class AbstractPlayer {
 
     public int getWinCnt() { return winCnt; }
 
+    public void incrementWinCnt() { winCnt++; }
+
     public abstract void put(int row, int col, String pieceName);
-
-    //TODO: Put this in game class, whole lot of work to do XD
-    public abstract boolean isWinner();
-
 }
