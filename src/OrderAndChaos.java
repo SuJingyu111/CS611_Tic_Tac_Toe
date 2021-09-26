@@ -1,18 +1,17 @@
-import java.util.List;
 import java.util.Scanner;
 
 public class OrderAndChaos extends TicTacToe {
-    //Game message display needs to be altered
+    //TODO: Game message display needs to be altered
     private final int parameterNum = 3;
 
     public OrderAndChaos() {
-        board = new OACBoard();
+        board = new Board(6, 6, 5);
         //TODO: MIGHT BE CHANGED
         teamListInit(OACPlayer.class);
     }
 
     public OrderAndChaos(int r, int c, int winningCriterion) {
-        board = new OACBoard(r, c, winningCriterion);
+        board = new Board(r, c, winningCriterion);
         //TODO: MIGHT BE CHANGED
         teamListInit(OACPlayer.class);
     }

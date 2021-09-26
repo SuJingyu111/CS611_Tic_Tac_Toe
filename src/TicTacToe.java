@@ -1,6 +1,4 @@
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TicTacToe extends AbstractBoardGame {
@@ -8,14 +6,12 @@ public class TicTacToe extends AbstractBoardGame {
     private final int parameterNum = 2;
 
     public TicTacToe() {
-        super(new TicTacToeBoard());
-        //TODO: MIGHT BE CHANGED
+        super(new Board());
         teamListInit(TicTacToePlayer.class);
     }
 
     public TicTacToe(int r, int c, int winningCriterion) {
-        //TODO: MIGHT BE CHANGED
-        super(new TicTacToeBoard(r, c, winningCriterion));
+        super(new Board(r, c, winningCriterion));
         teamListInit(TicTacToePlayer.class);
     }
 
@@ -32,7 +28,7 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
-    //TODO: This method can be put in abstract, and modified for team play.
+    //This method can be put in abstract.
     protected void teamListInit(Class<?> playerClass) {
         teamList = new ArrayList<>();
         teamList.add(new Team(1, playerClass, new String[]{"1"}, board));

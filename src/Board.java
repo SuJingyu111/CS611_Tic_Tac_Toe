@@ -1,17 +1,17 @@
-class TicTacToeBoard extends AbstractBoard {
+class Board extends AbstractBoard {
 
     protected int winningCriterion;
 
     protected int remainingPos;
 
-    public TicTacToeBoard() {
+    public Board() {
         super();
         winningCriterion = 3;
         remainingPos = 9;
         pieceNameMaxLen = 1;
     }
 
-    public TicTacToeBoard(int r, int c, int winningCriterion) {
+    public Board(int r, int c, int winningCriterion) {
         super(r, c);
         this.winningCriterion = winningCriterion;
         remainingPos = r * c;
