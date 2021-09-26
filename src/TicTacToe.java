@@ -35,16 +35,8 @@ public class TicTacToe extends AbstractBoardGame {
     //TODO: This method can be put in abstract, and modified for team play.
     protected void teamListInit(Class<?> playerClass) {
         teamList = new ArrayList<>();
-        teamList.add(new ArrayList<>());
-        try {
-            Constructor<?> cons = playerClass.getConstructor(String.class, AbstractBoard.class);
-            teamList.get(0).add(getPlayer(cons.newInstance("1", board)));
-            teamList.add(new ArrayList<>());
-            teamList.get(1).add(getPlayer(cons.newInstance("2", board)));
-        }
-        catch (Exception e) {
-            System.err.println("reflection gone wrong");
-        }
+        teamList.add(new Team(1, playerClass, new String[]{"1"}, board));
+        teamList.add(new Team(1, playerClass, new String[]{"2"}, board));
     }
 
     private AbstractPlayer getPlayer(Object obj) {
@@ -68,17 +60,16 @@ public class TicTacToe extends AbstractBoardGame {
     @Override
     public void endDisplay() {
         System.out.println("End of the game!");
-        for (List<AbstractPlayer> team : teamList) {
-            for (AbstractPlayer p : team) {
-                System.out.println("Player " + p.getName() + " won " + ((TicTacToePlayer)p).getWinCnt() + " time(s). ");
-            }
+        for (Team team : teamList) {
+            AbstractPlayer p = team.getRepresentingPlayer();
+            System.out.println("Player " + p.getName() + " won " + ((TicTacToePlayer)p).getWinCnt() + " time(s). ");
         }
     }
 
     protected boolean makeMove(Scanner in, int expectedParameterNum) {
-        for (List<AbstractPlayer> team : teamList) {
+        for (Team team : teamList) {
             //TODO: Edit for team play
-            AbstractPlayer thisPlayer = team.get(0);
+            AbstractPlayer thisPlayer = team.getRepresentingPlayer();
             if (!getRunningInputAndMove(thisPlayer, in, expectedParameterNum)) {
                 return false;
             }
