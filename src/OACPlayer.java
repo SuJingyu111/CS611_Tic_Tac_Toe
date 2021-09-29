@@ -1,3 +1,5 @@
+/** Player of OrderAndChaos */
+
 public class OACPlayer extends TicTacToePlayer {
 
     public OACPlayer(String name, AbstractBoard board) {

@@ -1,3 +1,5 @@
+/** Order and Chaos game entity */
+
 import java.util.Scanner;
 
 public class OrderAndChaos extends TicTacToe {
@@ -47,7 +49,7 @@ public class OrderAndChaos extends TicTacToe {
 
     @Override
     protected boolean getRunningInputAndMove(Team team, Scanner in, int expectedParameterNum) {
-        System.out.print("Player " + team.getTeamName() + " Enter your move x, y, piece type(O/X): ");
+        System.out.print("Player " + team.getTeamName() + " Enter your move row, column, piece type(O/X): ");
         int[] parameters = takeInput(in, 3);
         if (parameters.length == 0) {
             return false;

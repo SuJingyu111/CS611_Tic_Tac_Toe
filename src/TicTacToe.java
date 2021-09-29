@@ -1,10 +1,14 @@
+/** Implementation of the TicTacToe(TTT) game entity, inherits AbstractBoardGame */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TicTacToe extends AbstractBoardGame {
 
+    /** Number of parameters to be taken at run time. (Row, Col) in TTT. */
     private final int parameterNum = 2;
 
+    /** Directions to check winning condition */
     int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
 
     public TicTacToe() {
@@ -17,6 +21,7 @@ public class TicTacToe extends AbstractBoardGame {
         teamListInit(TicTacToePlayer.class,2, 1, new String[]{"O", "X"});
     }
 
+    /** Runs the game */
     @Override
     public void run() {
         printOpeningMessage();
@@ -30,8 +35,7 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
-    //This method can be put in abstract.
-
+    /** Initializes teamList, populates with proper number of teams */
     protected void teamListInit(Class<?> playerClass, int teamNum, int playerNum, String[] teamNames) {
         teamList = new ArrayList<>();
         for (int i = 0; i < teamNum; i++) {
@@ -41,6 +45,8 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
+
+    /** Casts an object to an abstract player */
     private AbstractPlayer getPlayer(Object obj) {
         return (AbstractPlayer) obj;
     }
@@ -67,6 +73,7 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
+    /** Runs a round */
     protected boolean makeMove(Scanner in, int expectedParameterNum) {
         for (Team team : teamList) {
             System.out.println(team.getTeamName());
@@ -84,6 +91,7 @@ public class TicTacToe extends AbstractBoardGame {
         return true;
     }
 
+    /** Takes and parses user input */
     protected int[] takeInput(Scanner in, int expectedNum) {
         String[] parameters = Utils.getInputStrParameters(in);
         if (parameters.length == 0) {
@@ -118,9 +126,10 @@ public class TicTacToe extends AbstractBoardGame {
         }
     }
 
+    /** Gets parsed input and play a move */
     protected boolean getRunningInputAndMove(Team team, Scanner in, int expectedParameterNum) {
         AbstractPlayer player = team.getRepresentingPlayer();
-        System.out.print("Player " + team.getTeamName() + " Enter your move x, y: ");
+        System.out.print("Player " + team.getTeamName() + " Enter your move row, column: ");
         int[] parameters = takeInput(in, expectedParameterNum);
         if (parameters.length == 0) {
             return false;
@@ -130,12 +139,15 @@ public class TicTacToe extends AbstractBoardGame {
         return true;
     }
 
+    /** Checks validity of parameters other than row and column */
     protected String[] checkOtherParameters(String[] parameters) throws Exception { return new String[0]; }
 
+    /** Returns final parsed input */
     protected int[] getFinalInput(int row, int col, String[] otherParameters) {
         return new int[]{row, col};
     }
 
+    /** Handles exceptions that does not have a default handler */
     protected int[] inputExceptionHandler(Exception e, Scanner in, int expectedNum) { return new int[0]; }
 
     @Override
@@ -156,6 +168,7 @@ public class TicTacToe extends AbstractBoardGame {
         return false;
     }
 
+    /** Gets the number of consecutive pieces */
     private int getLength(int[] direction, int r, int c, int[] playerLastPos) {
         int step = 0, lastMoveRow = playerLastPos[0], lastMoveCol = playerLastPos[1];
         while (lastMoveRow + (step + 1) * direction[0] < r && lastMoveRow + (step + 1) * direction[0] >= 0
@@ -174,6 +187,7 @@ public class TicTacToe extends AbstractBoardGame {
         return ((Board)board).isFull();
     }
 
+    /** Checks if the game should continue */
     private int getContinuingStatus(AbstractPlayer thisPlayer, Scanner in) {
         if (isWinner(thisPlayer)) {
             System.out.print("Player " + thisPlayer.getName() + " won this game! Want another round? (Yes/No) ");

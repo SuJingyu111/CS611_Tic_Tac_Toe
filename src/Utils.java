@@ -1,7 +1,12 @@
+/** Class of utility methods.
+ *  All methods should be static
+ */
+
 import java.util.Scanner;
 
 public class Utils {
 
+    /** Takes yes/no answers */
     public static boolean takeYes(Scanner in) {
         String continueStr = in.nextLine().trim();
         try {
@@ -21,6 +26,7 @@ public class Utils {
         }
     }
 
+    /** Reads input as array of Strings from command line */
     public static String[] getInputStrParameters(Scanner in) {
         String input = in.nextLine();
         if (input.equalsIgnoreCase("exit")) {
@@ -29,6 +35,7 @@ public class Utils {
         return input.split("( *, *)");
     }
 
+    /** Checks if the input has enough number */
     public static void parameterNumberCheck(int expectedNum, String[] parameters) throws ArrayIndexOutOfBoundsException {
         if (expectedNum != parameters.length) {
             throw new ArrayIndexOutOfBoundsException("Incorrect number of parameters! Expect: " + expectedNum + ", get: " + parameters.length + ", try again: ");

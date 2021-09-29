@@ -1,3 +1,5 @@
+/** Player of TicTacToe game */
+
 class TicTacToePlayer extends AbstractPlayer{
 
     private int lastMoveRow, lastMoveCol;
@@ -25,6 +27,7 @@ class TicTacToePlayer extends AbstractPlayer{
         board.put(row, col, pieces.get(pieceName));
     }
 
+    /** Returns the position where this player put a piece */
     public int[] getLastPos() {
         return new int[]{lastMoveRow, lastMoveCol};
     }

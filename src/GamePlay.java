@@ -1,4 +1,4 @@
-//This is the class where the games run
+/** This is the class where the games run */
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,6 +13,7 @@ public class GamePlay {
         gameNames = new HashSet<>(Arrays.asList("TicTacToe", "OrderAndChaos"));
     }
 
+    /** Overall game run method */
     public void gameplay(){
         while (true) {
             System.out.println("Games available: ");

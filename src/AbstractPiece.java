@@ -1,3 +1,5 @@
+/** Abstract class for piece used in board games */
+
 public abstract class AbstractPiece {
 
     protected String name;
@@ -9,9 +11,11 @@ public abstract class AbstractPiece {
         this.owner = owner;
     }
 
+    /** Gets the name of piece */
     public String getName() {
         return name;
     }
 
+    /** Gets the owner of piece */
     public AbstractPlayer getOwner() { return owner; }
 }
